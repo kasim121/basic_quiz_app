@@ -14,36 +14,73 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
+// ignore: use_key_in_widget_constructors, must_be_immutable
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   void customFunction() {
     debugPrint("Hi, i am  a custom function");
   }
 
+  var questionIndex = 0;
+
+  void answerQuestion() {
+    questionIndex = questionIndex + 1;
+    debugPrint("-----------------------printing" +
+        questionIndex.toString() +
+        "-------------------");
+  }
+
   @override
   Widget build(BuildContext context) {
+    var questions = [
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+    ];
     return Column(
       children: [
+        Text(
+          "Can't update the questions index of the list using stateless widget after pressing button:${questions[questionIndex]}",
+          style: const TextStyle(color: Colors.red, fontSize: 14),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
           onPressed: () {
             debugPrint("Hi, I a anonymous function");
           },
           child: const Text("Answere 1"),
         ),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
           onPressed: () => debugPrint(
               "Hi, i am also anonymous function with fat arrow syntax"),
-          child: const Text("Answere 1"),
+          child: const Text("Answere 2"),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         ElevatedButton(
           onPressed: customFunction,
-          child: const Text("Answere 1"),
+          child: const Text("Answere 3"),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        ElevatedButton(
+          onPressed: answerQuestion,
+          child: const Text("Answere 4"),
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ],
     );
