@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
 }
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
+
+//stateful-widget-private-properties
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
