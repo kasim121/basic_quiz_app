@@ -14,15 +14,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   void customFunction() {
     debugPrint("Hi, i am  a custom function");
   }
@@ -30,15 +35,30 @@ class MyHomePage extends StatelessWidget {
   var questionIndex = 0;
 
   void answerQuestion() {
-    questionIndex = questionIndex + 1;
-    debugPrint("-----------------------printing" +
-        questionIndex.toString() +
-        "-------------------");
+    setState(() {
+      questionIndex = questionIndex + 1;
+      debugPrint(
+          "-----------------------printing$questionIndex-------------------");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var questions = [
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?',
       'What\'s your favorite color?',
       'What\'s your favorite animal?',
     ];
