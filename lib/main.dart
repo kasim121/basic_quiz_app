@@ -1,3 +1,4 @@
+import 'package:basic_quiz_app/widgets/questions.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -19,7 +20,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ignore: use_key_in_widget_constructors, must_be_immutable
 
 //stateful-widget-private-properties
 class MyHomePage extends StatefulWidget {
@@ -66,10 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
     return Column(
       children: [
-        Text(
-          "Can't update the questions index of the list using stateless widget after pressing button:${questions[questionIndex]}",
-          style: const TextStyle(color: Colors.red, fontSize: 14),
-        ),
+        Questions(text: questions[questionIndex]),
+        // Text(
+        //   "Can't update the questions index of the list using stateless widget after pressing button:${questions[questionIndex]}",
+        //   style: const TextStyle(color: Colors.red, fontSize: 14),
+        // ),
         const SizedBox(
           height: 20,
         ),
