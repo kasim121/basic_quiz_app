@@ -18,7 +18,7 @@ class Answer extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             answerText,
-            style: const TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.white),
           ),
         ));
   }

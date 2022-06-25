@@ -35,6 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var _questionIndex = 0;
   int _totalScore = 0;
+  void resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   final _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
@@ -82,9 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.redAccent,
           title: const Text(
             "Basic Quiz App",
-            style: TextStyle(color: Colors.orangeAccent),
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
         ),
@@ -95,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 answerQuestion: _answerQuestion)
             : Result(
                 resultScore: _totalScore,
+                onPressed: () => resetQuiz(),
               ));
   }
 }
