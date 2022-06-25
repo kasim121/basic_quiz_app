@@ -1,11 +1,9 @@
+import 'package:basic_quiz_app/widgets/quiz.dart';
 import 'package:flutter/material.dart';
 
-import 'package:basic_quiz_app/widgets/questions.dart';
-
-import 'widgets/answer_text_widget.dart';
+import 'widgets/result.dart';
 
 void main() => runApp(const MyApp());
-//demo merging
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -23,7 +21,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//stateful-widget-private-properties
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -37,26 +34,43 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   var _questionIndex = 0;
-  var questions = [
+  int _totalScore = 0;
+  final _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
-      'answers': ['Black', 'Red', 'Green', 'White'],
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Green', 'score': 20},
+        {'text': 'Orange', 'score': 30},
+        {'text': 'Red', 'score': 40}
+      ],
     },
     {
       'questionText': 'What\'s your favorite animal?',
-      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+      'answers': [
+        {'text': 'Rabbit', 'score': 10},
+        {'text': 'Lion', 'score': 20},
+        {'text': 'Tiger', 'score': 30},
+        {'text': 'Snake', 'score': 40}
+      ],
     },
     {
       'questionText': 'Who\'s your favorite instructor?',
-      'answers': ['Max', 'Max', 'Max', 'Max'],
+      'answers': [
+        {'text': 'Rabbit', 'score': 1},
+        {'text': 'Lion', 'score': 2},
+        {'text': 'Tiger', 'score': 3},
+        {'text': 'Snake', 'score': 4}
+      ],
     },
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += _totalScore;
     setState(() {
       _questionIndex = _questionIndex + 1;
       debugPrint("---------printing$_questionIndex--------");
-      if (_questionIndex < questions.length) {
+      if (_questionIndex < _questions.length) {
         debugPrint("We have more questions!");
       } else {
         debugPrint("No more questions!");
@@ -66,39 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // var questions = [
-    //   {
-    //     'questionText': 'What\'s your favorite color?',
-    //     'answers': ['Black', 'Red', 'Green', 'White'],
-    //   },
-    //   {
-    //     'questionText': 'What\'s your favorite animal?',
-    //     'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
-    //   },
-    //   {
-    //     'questionText': 'Who\'s your favorite instructor?',
-    //     'answers': ['Max', 'Max', 'Max', 'Max'],
-    //   },
-    // ];
-    // var questions = [
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    //   'What\'s your favorite color?',
-    //   'What\'s your favorite animal?',
-    // ];
-
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -107,26 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           centerTitle: true,
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: [
-                  CustomText(
-                    text: questions[_questionIndex]['questionText'].toString(),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List)
-                      .map((answer) {
-                    return Answer(
-                      answerText: answer,
-                      selectHandler: _answerQuestion,
-                    );
-                  }).toList()
-                ],
-              )
-            : const Center(
-                child: Text("You did it.."),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questions: _questions,
+                questionIndex: _questionIndex,
+                answerQuestion: _answerQuestion)
+            : Result(
+                resultScore: _totalScore,
               ));
   }
 }
