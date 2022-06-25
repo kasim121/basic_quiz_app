@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-class Questions extends StatelessWidget {
+class CustomText extends StatelessWidget {
   final String text;
-  const Questions({
+  const CustomText({
     Key? key,
     required this.text,
   }) : super(key: key);

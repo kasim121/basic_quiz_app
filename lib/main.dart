@@ -1,5 +1,8 @@
-import 'package:basic_quiz_app/widgets/questions.dart';
 import 'package:flutter/material.dart';
+
+import 'package:basic_quiz_app/widgets/questions.dart';
+
+import 'widgets/answer_text_widget.dart';
 
 void main() => runApp(const MyApp());
 //demo merging
@@ -20,7 +23,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 //stateful-widget-private-properties
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -34,78 +36,97 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint("Hi, i am  a custom function");
   }
 
-  var questionIndex = 0;
+  var _questionIndex = 0;
+  var questions = [
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': ['Max', 'Max', 'Max', 'Max'],
+    },
+  ];
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      questionIndex = questionIndex + 1;
-      debugPrint(
-          "-----------------------printing$questionIndex-------------------");
+      _questionIndex = _questionIndex + 1;
+      debugPrint("---------printing$_questionIndex--------");
+      if (_questionIndex < questions.length) {
+        debugPrint("We have more questions!");
+      } else {
+        debugPrint("No more questions!");
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-    ];
-    return Column(
-      children: [
-        Questions(text: questions[questionIndex]),
-        // Text(
-        //   "Can't update the questions index of the list using stateless widget after pressing button:${questions[questionIndex]}",
-        //   style: const TextStyle(color: Colors.red, fontSize: 14),
-        // ),
-        const SizedBox(
-          height: 20,
+    // var questions = [
+    //   {
+    //     'questionText': 'What\'s your favorite color?',
+    //     'answers': ['Black', 'Red', 'Green', 'White'],
+    //   },
+    //   {
+    //     'questionText': 'What\'s your favorite animal?',
+    //     'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    //   },
+    //   {
+    //     'questionText': 'Who\'s your favorite instructor?',
+    //     'answers': ['Max', 'Max', 'Max', 'Max'],
+    //   },
+    // ];
+    // var questions = [
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    //   'What\'s your favorite color?',
+    //   'What\'s your favorite animal?',
+    // ];
+
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Basic Quiz App",
+            style: TextStyle(color: Colors.orangeAccent),
+          ),
+          centerTitle: true,
         ),
-        ElevatedButton(
-          onPressed: () {
-            debugPrint("Hi, I a anonymous function");
-          },
-          child: const Text("Answere 1"),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ElevatedButton(
-          onPressed: () => debugPrint(
-              "Hi, i am also anonymous function with fat arrow syntax"),
-          child: const Text("Answere 2"),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ElevatedButton(
-          onPressed: customFunction,
-          child: const Text("Answere 3"),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ElevatedButton(
-          onPressed: answerQuestion,
-          child: const Text("Answere 4"),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
-    );
+        body: _questionIndex < questions.length
+            ? Column(
+                children: [
+                  CustomText(
+                    text: questions[_questionIndex]['questionText'].toString(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ...(questions[_questionIndex]['answers'] as List)
+                      .map((answer) {
+                    return Answer(
+                      answerText: answer,
+                      selectHandler: _answerQuestion,
+                    );
+                  }).toList()
+                ],
+              )
+            : const Center(
+                child: Text("You did it.."),
+              ));
   }
 }
